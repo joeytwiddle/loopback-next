@@ -120,7 +120,8 @@ export class Binding<T = BoundValue> {
    * @param path The path
    *
    */
-  static buildKeyWithPath(key: string, path: string) {
+  static buildKeyWithPath(key: string, path?: string) {
+    if (!path) return key;
     return `${key}${Binding.PROPERTY_SEPARATOR}${path}`;
   }
 
@@ -141,6 +142,11 @@ export class Binding<T = BoundValue> {
       key: keyWithPath.substr(0, index).trim(),
       path: keyWithPath.substr(index + 1),
     };
+  }
+
+  static OPTIONS_KEY = '$options';
+  static buildKeyForOptions(key?: string) {
+    return key ? `${key}:${Binding.OPTIONS_KEY}` : Binding.OPTIONS_KEY;
   }
 
   public readonly key: string;
@@ -255,11 +261,18 @@ export class Binding<T = BoundValue> {
     );
   }
 
+  /**
+   * Lock the binding so that it cannot be rebound
+   */
   lock(): this {
     this.isLocked = true;
     return this;
   }
 
+  /**
+   * Add a tag to the binding
+   * @param tagName Tag name or an array of tag names
+   */
   tag(tagName: string | string[]): this {
     if (typeof tagName === 'string') {
       this.tags.add(tagName);
@@ -271,6 +284,10 @@ export class Binding<T = BoundValue> {
     return this;
   }
 
+  /**
+   * Set the binding scope
+   * @param scope Binding scope
+   */
   inScope(scope: BindingScope): this {
     this.scope = scope;
     return this;
@@ -402,11 +419,17 @@ export class Binding<T = BoundValue> {
     return this;
   }
 
+  /**
+   * Unlock the binding
+   */
   unlock(): this {
     this.isLocked = false;
     return this;
   }
 
+  /**
+   * Convert to a plain JSON object
+   */
   toJSON(): Object {
     // tslint:disable-next-line:no-any
     const json: {[name: string]: any} = {
