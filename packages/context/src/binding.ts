@@ -144,9 +144,9 @@ export class Binding<T = BoundValue> {
     };
   }
 
-  static OPTIONS_KEY = '$options';
-  static buildKeyForOptions(key?: string) {
-    return key ? `${key}:${Binding.OPTIONS_KEY}` : Binding.OPTIONS_KEY;
+  static CONFIG_KEY = '$config';
+  static buildKeyForConfig(key?: string) {
+    return key ? `${key}:${Binding.CONFIG_KEY}` : Binding.CONFIG_KEY;
   }
 
   public readonly key: string;
