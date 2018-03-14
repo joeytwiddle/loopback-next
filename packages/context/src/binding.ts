@@ -144,9 +144,20 @@ export class Binding<T = BoundValue> {
     };
   }
 
-  static CONFIG_KEY = '$config';
-  static buildKeyForConfig(key?: string) {
-    return key ? `${key}:${Binding.CONFIG_KEY}` : Binding.CONFIG_KEY;
+  static CONFIG_NAMESPACE = '$config';
+  /**
+   * Build a binding key for the configuration of the given binding and env.
+   * The format is `$config.<env>:<key>`
+   *
+   * @param key The binding key that accepts the configuration
+   * @param env The environment such as `dev`, `test`, and `prod`
+   */
+  static buildKeyForConfig(key: string = '', env: string = '') {
+    const namespace = env
+      ? `${Binding.CONFIG_NAMESPACE}.${env}`
+      : Binding.CONFIG_NAMESPACE;
+    const bindingKey = key ? `${namespace}${key}` : Binding.CONFIG_NAMESPACE;
+    return bindingKey;
   }
 
   public readonly key: string;
