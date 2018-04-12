@@ -1,9 +1,9 @@
 #!/bin/bash
 
-rm -rf loopback.io
-git clone https://github.com/strongloop/loopback.io.git
+rm -rf sandbox/loopback.io/
+git clone https://github.com/strongloop/loopback.io.git sandbox/loopback.io
 npm run bootstrap
-cd loopback.io/
+cd sandbox/loopback.io/
 bundle install
 npm run fetch-readmes
 bundle exec jekyll build
