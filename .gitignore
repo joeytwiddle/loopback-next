@@ -9,3 +9,4 @@ api-docs
 **/dist*
 **/package
 .sandbox
+loopback.io

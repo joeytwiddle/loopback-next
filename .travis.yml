@@ -21,6 +21,13 @@ after_success:
 
 jobs:
   include:
+    - stage: loopback.io
+      before_script: skip
+      script:
+        - npm run test:site
+      after_success: skip
+      os:
+        - linux
     - stage: commit linting
       before_install:
         - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
