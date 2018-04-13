@@ -24,6 +24,7 @@
     "@loopback/core": "^0.5.2",
     "@loopback/openapi-v3": "^0.6.0",
     "@loopback/openapi-v3-types": "^0.3.5",
+    "@loopback/types": "^0.1.0",
     "@types/cors": "^2.8.3",
     "@types/http-errors": "^1.6.1",
     "body": "^5.1.0",

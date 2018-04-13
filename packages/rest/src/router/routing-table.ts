@@ -15,6 +15,7 @@ import {
   invokeMethod,
   instantiateClass,
   ValueOrPromise,
+  MetadataInspector,
 } from '@loopback/context';
 import {ServerRequest} from 'http';
 import * as HttpErrors from 'http-errors';
@@ -37,6 +38,7 @@ const debug = require('debug')('loopback:core:routing-table');
 // See https://github.com/strongloop/loopback-next/issues/98
 import * as pathToRegexp from 'path-to-regexp';
 import {CoreBindings} from '@loopback/core';
+import {getSerializer} from '@loopback/types';
 
 /**
  * Parse the URL of the incoming request and set additional properties
@@ -428,12 +430,28 @@ export class ControllerRoute<T> extends BaseRoute {
         `Controller method not found: ${this.describe()}`,
       );
     }
+
+    const metadata = MetadataInspector.getDesignTypeForMethod(
+      controller,
+      this._methodName,
+    );
+    const paramType = metadata.parameterTypes[0];
+    // tslint:disable-next-line:no-any
+    const serializer = getSerializer(paramType as Constructor<any>);
+    const coercedArgs: OperationArgs = [];
+    args.forEach(arg => {
+      coercedArgs.push(serializer.coerce(arg));
+    });
+
+    // do type coercion here?
+
     // Invoke the method with dependency injection
     return await invokeMethod(
       controller,
       this._methodName,
       requestContext,
-      args,
+      // args,
+      coercedArgs,
     );
   }
 }
