@@ -17,16 +17,22 @@ import {
   del,
 } from '@loopback/rest';
 
+const delay = (ms: number) => new Promise(resolve => {
+  setTimeout(resolve, ms);
+});
+
 export class TodoController {
   constructor(@repository(TodoRepository) protected todoRepo: TodoRepository) {}
 
   @post('/todos')
   async createTodo(@requestBody() todo: Todo) {
+    console.log(`--- createTodo was called at ${String(new Date())} with input ${JSON.stringify(todo)} ---`);
     // TODO(bajtos) This should be handled by the framework
     // See https://github.com/strongloop/loopback-next/issues/118
     if (!todo.title) {
       throw new HttpErrors.BadRequest('title is required');
     }
+    await delay(2 * 60 * 1000);
     return await this.todoRepo.create(todo);
   }
 
