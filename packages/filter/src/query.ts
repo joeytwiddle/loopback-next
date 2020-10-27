@@ -44,24 +44,23 @@ export type Operators =
 /**
  * Matching predicate comparison
  */
-export type PredicateComparison<PT> = {
-  eq?: PT;
-  neq?: PT;
-  gt?: PT;
-  gte?: PT;
-  lt?: PT;
-  lte?: PT;
-  inq?: PT[];
-  nin?: PT[];
-  between?: [PT, PT];
-  exists?: boolean;
-  like?: PT;
-  nlike?: PT;
-  ilike?: PT;
-  nilike?: PT;
-  regexp?: string | RegExp;
-  // [extendedOperation: string]: any;
-};
+export type PredicateComparison<PT> =
+  | {eq: PT}
+  | {neq: PT}
+  | {gt: PT}
+  | {gte: PT}
+  | {lt: PT}
+  | {lte: PT}
+  | {inq: PT[]}
+  | {nin: PT[]}
+  | {between: [PT, PT]}
+  | {exists: boolean}
+  | {like: PT}
+  | {nlike: PT}
+  | {ilike: PT}
+  | {nilike: PT}
+  | {regexp: string | RegExp};
+// | {[extendedOperation: string]: any};
 
 /**
  * Value types for `{propertyName: value}`
