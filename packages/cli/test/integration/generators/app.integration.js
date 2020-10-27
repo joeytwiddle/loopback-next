@@ -34,7 +34,7 @@ const readFile = promisify(fs.readFile);
 
 describe('app-generator extending BaseGenerator', baseTests);
 describe('generator-loopback4:app', tests);
-describe('app-generator specific files', () => {
+describe('app-generator specific files', function () {
   before(() => {
     return helpers.run(generator).withPrompts(props);
   });
@@ -148,7 +148,7 @@ function testFormat() {
   before(createAppAndInstallDeps);
   /** @this {Mocha.Context} */
   function createAppAndInstallDeps() {
-    this.timeout(90 * 1000);
+    this.timeout(180 * 1000);
     return helpers
       .run(generator)
       .withOptions({
@@ -290,7 +290,7 @@ describe('app-generator with tilde project path', () => {
   /** @this {Mocha.Context} */
   async function givenScaffoldedApp() {
     // Increase the timeout to accommodate slow CI build machines
-    this.timeout(30 * 1000);
+    this.timeout(60 * 1000);
     // check it with full path. tilde-path-app should not exist at this point
     assert.equal(fs.existsSync(sandbox), false);
     await helpers
@@ -310,7 +310,7 @@ describe('app-generator with tilde project path', () => {
   /** @this {Mocha.Context} */
   function cleanup() {
     // Increase the timeout to accommodate slow CI build machines
-    this.timeout(30 * 1000);
+    this.timeout(60 * 1000);
 
     // Handle special case - Skipping... not inside the project root directory.
     if (runsOutsideRoot) {

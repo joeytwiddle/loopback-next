@@ -96,7 +96,10 @@ describe('lb4 import-lb3-models', function () {
     );
   });
 
-  it('imports a model inheriting from a custom base class', async () => {
+  it('imports a model inheriting from a custom base class', async function () {
+    // eslint-disable-next-line @typescript-eslint/no-invalid-this
+    this.timeout(90000);
+
     const outDir = path.join(sandbox.path, 'models-with-inheritance');
 
     await testUtils

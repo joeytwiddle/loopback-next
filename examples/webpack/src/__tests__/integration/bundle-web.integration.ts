@@ -32,7 +32,7 @@ skipIf<[(this: Suite) => void], void>(
 
     before('generate bundle-web.js', async function (this: Mocha.Context) {
       // It may take some time to generate the bundle using webpack
-      this.timeout(30000);
+      this.timeout(90000);
       await generateBundle('web');
       expect(
         fs.existsSync(path.join(__dirname, '../../bundle-web.js')),
